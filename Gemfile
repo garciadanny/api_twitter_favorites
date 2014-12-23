@@ -11,6 +11,9 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
+# Sign in with twitter via OmniAuth
+gem 'omniauth-twitter', '~> 1.1.0'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
