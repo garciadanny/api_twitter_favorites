@@ -14,11 +14,12 @@
 ActiveRecord::Schema.define(version: 20141226063510) do
 
   create_table "users", force: :cascade do |t|
-    t.string  "twitter_id"
+    t.integer "twitter_id"
     t.string  "twitter_handle"
     t.string  "access_token"
     t.string  "access_token_secret"
     t.integer "initial_favorites_count"
+    t.integer "last_fetched_favorite_id"
   end
 
   add_index "users", ["twitter_id"], name: "index_users_on_twitter_id"
