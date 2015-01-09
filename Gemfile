@@ -14,6 +14,9 @@ gem 'jbuilder', '~> 2.0'
 # Sign in with twitter via OmniAuth
 gem 'omniauth-twitter', '~> 1.1.0'
 
+# Twitter client gem
+gem 'twitter', '~> 5.13.0'
+
 # Queueing Backend
 gem 'sidekiq', '~> 3.3.0'
 
