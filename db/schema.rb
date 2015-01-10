@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226063510) do
+ActiveRecord::Schema.define(version: 20150109175955) do
+
+  create_table "last_fetched_favorites", force: :cascade do |t|
+    t.integer "favorite_id"
+    t.integer "user_id"
+    t.boolean "last_favorite", default: false
+  end
+
+  add_index "last_fetched_favorites", ["user_id"], name: "index_last_fetched_favorites_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.integer "twitter_id"
@@ -19,7 +27,6 @@ ActiveRecord::Schema.define(version: 20141226063510) do
     t.string  "access_token"
     t.string  "access_token_secret"
     t.integer "initial_favorites_count"
-    t.integer "last_fetched_favorite_id"
   end
 
   add_index "users", ["twitter_id"], name: "index_users_on_twitter_id"
