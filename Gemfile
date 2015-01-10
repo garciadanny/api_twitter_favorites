@@ -34,6 +34,7 @@ gem 'sidekiq', '~> 3.3.0'
 
 group :development, :test do
   gem 'pry', '~> 0.10.1'
+  gem 'pry-remote', '~> 0.1.8'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
