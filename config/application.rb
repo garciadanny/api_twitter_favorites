@@ -34,5 +34,8 @@ module ApiTwitterFavorites
     # Queueing Backend Adapter
     config.active_job.queue_adapter = :sidekiq
     config.active_job.queue_name_prefix = Rails.env
+
+    # Autoload Lib directory
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
