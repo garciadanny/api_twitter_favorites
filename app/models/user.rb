@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_one :last_fetched_favorite
+  has_many :favorites, dependent: :destroy
 
   after_initialize do
     last_fetched_favorite ||= build_last_fetched_favorite
@@ -19,6 +20,6 @@ class User < ActiveRecord::Base
   end
 
   def new_user?
-    user.last_fetched_favorite.favorite_id.nil?
+    last_fetched_favorite.favorite_id.nil?
   end
 end

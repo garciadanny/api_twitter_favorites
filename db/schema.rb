@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109175955) do
+ActiveRecord::Schema.define(version: 20150112172820) do
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "twitter_id"
+    t.text    "text"
+  end
+
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "last_fetched_favorites", force: :cascade do |t|
     t.integer "favorite_id"
