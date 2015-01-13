@@ -3,7 +3,7 @@ class TwitterFavoritesJob < ActiveJob::Base
 
   def perform(runner_class, user)
     favorites_runner = runner_class.constantize.new( user )
-    favorites_runner.start
+    favorites_runner.start unless user.last_fetched_favorite.last_favorite?
     enqueue_next_job user
   end
 
