@@ -28,5 +28,10 @@ describe SessionsController do
         }.not_to change{User.count}
       end
     end
+
+    it "enqueue's a job" do
+      expect(TwitterFavoritesJob).to receive(:perform_later).once
+      post :create, provider: :twitter
+    end
   end
 end
