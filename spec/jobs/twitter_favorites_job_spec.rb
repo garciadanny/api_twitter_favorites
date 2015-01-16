@@ -31,9 +31,11 @@ describe TwitterFavoritesJob do
     context 'when there are remaining favorited tweets' do
 
       before do
-        # The first/second time #enqueue_next_job is called, #last_favorite? will return false
-        # indicating there are remainging tweets and to enqueue another job.
-        # The third time #enqueue_next_job is called, it'll return true
+        # The first time #last_favorite? is called is in #perform. #last_perform? will return false
+        # and enqueue the first job.
+        # The second time #last_favorite? is called is in #enqueue_next_job. It'll also return false
+        # and enqueue the second job.
+        # The third time #last_favorite? is called is in #enqueue_next_job. It'll return true
         # indicating there are no more remainging tweets and another job does not need to be queued.
         # This will avoid a "stack level too deep" error in our test
         allow(user.last_fetched_favorite).to receive(:last_favorite?).and_return(false, false, true)
