@@ -1,0 +1,7 @@
+:pidfile: tmp/pids/sidekiq.pid
+development:
+  :queues:
+    - development_default
+production:
+  :queues:
+    - production_default

@@ -1,5 +1,5 @@
 class TwitterFavoritesJob < ActiveJob::Base
-  queue_as "#{Rails.env}_default".to_sym
+  queue_as :default
 
   def perform(runner_class, user)
     favorites_runner = runner_class.constantize.new( user )
