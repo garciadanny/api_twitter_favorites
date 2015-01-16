@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   get "/auth/:provider/callback" => "sessions#create"
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

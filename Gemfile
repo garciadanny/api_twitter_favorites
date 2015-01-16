@@ -20,6 +20,9 @@ gem 'twitter', '~> 5.13.0'
 # Queueing Backend
 gem 'sidekiq', '~> 3.3.0'
 
+# Sidekiq UI monitoring
+gem 'sinatra', require: nil
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
