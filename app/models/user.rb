@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_one :last_fetched_favorite
+  has_one :last_fetched_favorite, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
   after_initialize do
