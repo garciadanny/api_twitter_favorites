@@ -15,22 +15,22 @@ ActiveRecord::Schema.define(version: 20150112172820) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "twitter_id"
+    t.string  "twitter_id", limit: 8
     t.text    "text"
   end
 
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "last_fetched_favorites", force: :cascade do |t|
-    t.integer "favorite_id"
+    t.integer "favorite_id",   limit: 8
     t.integer "user_id"
-    t.boolean "last_favorite", default: false
+    t.boolean "last_favorite",           default: false
   end
 
   add_index "last_fetched_favorites", ["user_id"], name: "index_last_fetched_favorites_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.integer "twitter_id"
+    t.integer "twitter_id",              limit: 8
     t.string  "twitter_handle"
     t.string  "access_token"
     t.string  "access_token_secret"
