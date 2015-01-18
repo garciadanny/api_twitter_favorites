@@ -11,6 +11,8 @@ describe TwitterFavoritesJob do
 
   before do
     allow_any_instance_of(FavoritesRunner).to receive(:fetch).and_return favorites
+    # stub calls to db
+    allow(user.favorites).to receive(:create_favorites).with(any_args).at_least(2).times
   end
 
   after do

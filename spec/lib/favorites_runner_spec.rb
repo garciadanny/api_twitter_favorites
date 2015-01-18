@@ -86,6 +86,8 @@ describe FavoritesRunner do
 
     before do
       allow(runner).to receive(:fetch).and_return(favorites)
+      # stub db calls
+      allow(user.favorites).to receive(:create_favorites).with(any_args).at_least(15).times
     end
 
     it 'calls #fetch 15 times' do
