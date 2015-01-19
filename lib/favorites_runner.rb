@@ -7,6 +7,7 @@ class FavoritesRunner
 
   def start
     15.times do
+      return if user.last_fetched_favorite.last_favorite?
       f = fetch
       persist_favorites( f )
       update_last_fetched_favorite( f )
