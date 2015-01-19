@@ -3,16 +3,20 @@ require 'rails_helper'
 describe TwitterFavoritesJob do
   include ActiveJob::TestHelper
 
-  let(:user) { User.create }
+  let(:user) { create_user }
 
   let(:favorites) do
     [Twitter::Tweet.new(id: 1), Twitter::Tweet.new(id: 2)]
   end
 
   before do
-    allow_any_instance_of(FavoritesRunner).to receive(:fetch).and_return favorites
-    # stub calls to db
-    allow(user.favorites).to receive(:create_favorites).with(any_args).at_least(2).times
+    # Stub calls to FavoritesRunner#start to avoid making API requests
+    # and calls to the db.
+    allow_any_instance_of(FavoritesRunner).to receive(:start)
+    # Stub out calls to #last_favorite? made in TwitterFavoritesJob
+    # to simulate making requests to the API.
+    # This will avoid a "stack level too deep" error in our test
+    allow(user.last_fetched_favorite).to receive(:last_favorite?).and_return(false, true)
   end
 
   after do
@@ -33,13 +37,6 @@ describe TwitterFavoritesJob do
     context 'when there are remaining favorited tweets' do
 
       before do
-        # The first time #last_favorite? is called is in #perform. #last_perform? will return false
-        # and enqueue the first job.
-        # The second time #last_favorite? is called is in #enqueue_next_job. It'll also return false
-        # and enqueue the second job.
-        # The third time #last_favorite? is called is in #enqueue_next_job. It'll return true
-        # indicating there are no more remainging tweets and another job does not need to be queued.
-        # This will avoid a "stack level too deep" error in our test
         allow(user.last_fetched_favorite).to receive(:last_favorite?).and_return(false, false, true)
       end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe FavoritesRunner do
 
-  let(:user) { User.create }
+  let(:user) { create_user }
 
   let(:runner) { FavoritesRunner.new( user ) }
 
@@ -91,17 +91,17 @@ describe FavoritesRunner do
     end
 
     it 'calls #fetch 15 times' do
-      expect(runner).to receive(:fetch).at_least(15).times
+      expect(runner).to receive(:fetch).at_most(15).times
       runner.start
     end
 
     it 'calls #persist_favorites 15 times' do
-      expect(runner).to receive(:persist_favorites).with(favorites).at_least(15).times
+      expect(runner).to receive(:persist_favorites).with(favorites).at_most(15).times
       runner.start
     end
 
     it 'calls #update_last_fetched_favorite 15 times' do
-      expect(runner).to receive(:update_last_fetched_favorite).with(favorites).at_least(15).times
+      expect(runner).to receive(:update_last_fetched_favorite).with(favorites).at_most(15).times
       runner.start
     end
   end
