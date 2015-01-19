@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20150112172820) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "twitter_id", limit: 8
+    t.integer "twitter_id", limit: 8
     t.text    "text"
   end
 
