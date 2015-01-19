@@ -20,4 +20,8 @@ module OmniauthMockHelper
         }
     }
   end
+
+  def create_user
+    User.create_user mock_auth_hash
+  end
 end
