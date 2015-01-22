@@ -13,13 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20150112172820) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "twitter_id", limit: 8
     t.text    "text"
   end
 
-  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
   create_table "last_fetched_favorites", force: :cascade do |t|
     t.integer "favorite_id",   limit: 8
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150112172820) do
     t.boolean "last_favorite",           default: false
   end
 
-  add_index "last_fetched_favorites", ["user_id"], name: "index_last_fetched_favorites_on_user_id"
+  add_index "last_fetched_favorites", ["user_id"], name: "index_last_fetched_favorites_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.integer "twitter_id",              limit: 8
@@ -37,6 +40,6 @@ ActiveRecord::Schema.define(version: 20150112172820) do
     t.integer "initial_favorites_count"
   end
 
-  add_index "users", ["twitter_id"], name: "index_users_on_twitter_id"
+  add_index "users", ["twitter_id"], name: "index_users_on_twitter_id", using: :btree
 
 end
