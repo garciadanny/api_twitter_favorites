@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112172820) do
+ActiveRecord::Schema.define(version: 20150123170554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,13 +24,21 @@ ActiveRecord::Schema.define(version: 20150112172820) do
 
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
-  create_table "last_fetched_favorites", force: :cascade do |t|
-    t.integer "favorite_id",   limit: 8
+  create_table "least_recent_favorite_runners", force: :cascade do |t|
+    t.integer "max_id",   limit: 8
+    t.boolean "complete",           default: false
     t.integer "user_id"
-    t.boolean "last_favorite",           default: false
   end
 
-  add_index "last_fetched_favorites", ["user_id"], name: "index_last_fetched_favorites_on_user_id", using: :btree
+  add_index "least_recent_favorite_runners", ["user_id"], name: "index_least_recent_favorite_runners_on_user_id", using: :btree
+
+  create_table "most_recent_favorite_runners", force: :cascade do |t|
+    t.integer "since_id", limit: 8
+    t.integer "max_id",   limit: 8
+    t.integer "user_id"
+  end
+
+  add_index "most_recent_favorite_runners", ["user_id"], name: "index_most_recent_favorite_runners_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.integer "twitter_id",              limit: 8

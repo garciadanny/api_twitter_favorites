@@ -1,35 +1,20 @@
-class FavoritesRunner
-  attr_reader :user
+module FavoritesRunner
 
-  def initialize user
-    @user = user
-  end
-
-  def start
-    15.times do
-      return if user.last_fetched_favorite.last_favorite?
-      f = fetch
-      persist_favorites( f )
-      update_last_fetched_favorite( f )
-    end
-  end
-
-  private
-
-  def update_last_fetched_favorite favorites
-    user.last_fetched_favorite.update( favorite_id: favorites.last.id ) if favorites.last
-    user.last_fetched_favorite.update( last_favorite: true ) if favorites.count < 200
+  def fetch args
+    params = args.delete_if { |k,v| v.nil? }
+    client.favorites( {count: 200}.merge( params ) )
   end
 
   def persist_favorites favorites
-    favorites.shift unless user.new_user?
     favorites.each { |f| user.favorites.create_favorites(f) }
   end
 
-  def fetch
-    max_id = user.last_fetched_favorite.favorite_id
-    args = { count: 200, max_id: max_id }.delete_if { |k,v| v.nil? }
-    client.favorites( args )
+  def optimized_max_id
+    max_id - 1 if max_id
+  end
+
+  def user
+    @user ||= User.find user_id
   end
 
   def client

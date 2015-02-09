@@ -1,6 +1,12 @@
 class User < ActiveRecord::Base
-  has_one :last_fetched_favorite, dependent: :destroy
+  has_one :least_recent_favorite_runner, dependent: :destroy
+  has_one :most_recent_favorite_runner, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
+  after_create do |user|
+    user.create_least_recent_favorite_runner
+    user.create_most_recent_favorite_runner
+  end
 
   def self.create_user auth
     create! do |user|
@@ -9,11 +15,6 @@ class User < ActiveRecord::Base
       user.initial_favorites_count = auth['extra']['raw_info']['favourites_count']
       user.access_token = auth['credentials']['token']
       user.access_token_secret = auth['credentials']['secret']
-      user.build_last_fetched_favorite
     end
-  end
-
-  def new_user?
-    last_fetched_favorite.favorite_id.nil?
   end
 end

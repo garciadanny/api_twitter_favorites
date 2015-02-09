@@ -1,17 +1,19 @@
 class TwitterFavoritesJob < ActiveJob::Base
   queue_as :default
 
-  def perform(runner_class, user)
-    favorites_runner = runner_class.constantize.new( user )
-    favorites_runner.start unless user.last_fetched_favorite.last_favorite?
+  def perform(user)
+    if user.least_recent_favorite_runner.complete?
+      user.most_recent_favorite_runner.start
+    else
+      user.least_recent_favorite_runner.start
+    end
+
     enqueue_next_job user
   end
 
   def enqueue_next_job user
-    unless user.last_fetched_favorite.last_favorite?
-      TwitterFavoritesJob.set(wait: 15.minutes).perform_later( 'FavoritesRunner', user )
+    unless user.least_recent_favorite_runner.complete?
+      TwitterFavoritesJob.set(wait: 15.minutes).perform_later( user )
     end
   end
 end
-
-
