@@ -1,4 +1,4 @@
-module FavoritesRunner
+module FavoritesRunnerHelper
 
   def fetch args
     params = args.delete_if { |k,v| v.nil? }
@@ -6,7 +6,13 @@ module FavoritesRunner
   end
 
   def persist_favorites favorites
-    favorites.each { |f| user.favorites.create_favorites(f) }
+    new_favs = new_favorites( favorites )
+    new_favs.each { |f| user.favorites.create_favorites(f) }
+  end
+
+  def new_favorites favorites
+    ids = favorites.map( &:id ) - Favorite.pluck( :twitter_id )
+    favorites.select { |f| ids.include?( f.id ) }
   end
 
   def optimized_max_id
