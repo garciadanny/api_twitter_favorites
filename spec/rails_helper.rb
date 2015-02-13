@@ -4,7 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'support/omniauth_mock_helper'
-require 'support/favorites_runner_helper'
+require 'support/helpers'
 require 'sidekiq/testing'
 
 Sidekiq::Testing.fake!
@@ -54,7 +54,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
   config.include OmniauthMockHelper
-  config.include FavoritesRunnerHelper
+  config.include Helpers
 end
 
 OmniAuth.config.test_mode = true

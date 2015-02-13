@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
-  has_one :least_recent_favorite_runner, dependent: :destroy
-  has_one :most_recent_favorite_runner, dependent: :destroy
+  has_one :favorite_runner, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
   after_create do |user|
-    user.create_least_recent_favorite_runner
-    user.create_most_recent_favorite_runner
+    user.create_favorite_runner
   end
 
   def self.create_user auth

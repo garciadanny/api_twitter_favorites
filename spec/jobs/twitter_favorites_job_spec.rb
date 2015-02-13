@@ -7,8 +7,7 @@ describe TwitterFavoritesJob do
 
   before do
     # Stub calls to #start to avoid making API requests and calls to the db.
-    allow_any_instance_of(LeastRecentFavoriteRunner).to receive(:start)
-    allow_any_instance_of(MostRecentFavoriteRunner).to receive(:start)
+    allow_any_instance_of(FavoriteRunner).to receive(:start)
   end
 
   after do
@@ -17,47 +16,29 @@ describe TwitterFavoritesJob do
 
   describe '#perform' do
 
-    context 'given the least_recent_favorite_runner is not complete' do
-
       before do
         # Stub out calls to #complete? to avoid "stack level too deep" errors.
-        allow(user.least_recent_favorite_runner).to receive(:complete?).and_return(false, true)
+        allow(user.favorite_runner).to receive(:complete?).and_return( true )
       end
 
-      it 'starts the least_recent_favorite_runner' do
+      it 'starts the favorite_runner' do
         perform_enqueued_jobs do
           TwitterFavoritesJob.perform_later( user )
           expect(performed_jobs.size).to eq 1
         end
       end
-    end
-
-    context 'given the least_recent_favorite_runner is complete' do
-
-      before do
-        # Stub out calls to #complete? to avoid "stack level too deep" errors.
-        allow(user.least_recent_favorite_runner).to receive(:complete?).and_return(true)
-      end
-
-      it "starts the most_recent_favorite_runner" do
-        perform_enqueued_jobs do
-          TwitterFavoritesJob.perform_later( user )
-          expect(performed_jobs.size).to eq 1
-        end
-      end
-    end
   end
 
   describe '#enqueue_next_job' do
 
-    context 'given the least_recent_favorite_runner is not complete' do
+    context 'given the favorite_runner is not complete' do
 
       before do
         # Stub out calls to #complete? to avoid "stack level too deep" errors.
-        allow(user.least_recent_favorite_runner).to receive(:complete?).and_return(false, false, true)
+        allow(user.favorite_runner).to receive(:complete?).and_return(false, true)
       end
 
-      it 'starts the least_recent_favorite_runner twice' do
+      it 'starts the favorite_runner twice' do
         perform_enqueued_jobs do
           TwitterFavoritesJob.perform_later( user )
           expect(performed_jobs.size).to eq 2
@@ -65,14 +46,14 @@ describe TwitterFavoritesJob do
       end
     end
 
-    context 'given the least_recent_favorite_runner is complete' do
+    context 'given the favorite_runner is complete' do
 
       before do
         # Stub out calls to #complete? to avoid "stack level too deep" errors.
-        allow(user.least_recent_favorite_runner).to receive(:complete?).and_return(true)
+        allow(user.favorite_runner).to receive(:complete?).and_return(true)
       end
 
-      it 'only start the MostRecentFavoriteRunner once' do
+      it 'only start the FavoriteRunner once' do
         perform_enqueued_jobs do
           TwitterFavoritesJob.perform_later( user )
           expect(performed_jobs.size).to eq 1

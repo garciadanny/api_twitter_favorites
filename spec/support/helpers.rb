@@ -1,6 +1,6 @@
-module FavoritesRunnerHelper
+module Helpers
   class TestRunner
-    include FavoritesRunner
+    include FavoritesRunnerHelper
     attr_accessor :max_id, :user_id
 
     def initialize args

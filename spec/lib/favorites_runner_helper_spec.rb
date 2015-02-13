@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe FavoritesRunner do
+describe FavoritesRunnerHelper do
 
   let(:user) { create_user }
 
@@ -70,6 +70,18 @@ describe FavoritesRunner do
 
     it 'returns the user object' do
       expect(runner.user).to be_a_kind_of User
+    end
+  end
+
+  describe '#new_favorites' do
+    before do
+      db_ids = [1, 3, 5, 7]
+      allow(Favorite).to receive(:pluck).with(:twitter_id).and_return( db_ids )
+    end
+
+    it 'returns a list of favorites not already in the db' do
+      new_favs = runner.new_favorites( favorites )
+      expect(new_favs).to eq [favorites.last]
     end
   end
 end

@@ -1,5 +1,5 @@
-class LeastRecentFavoriteRunner < ActiveRecord::Base
-  include FavoritesRunner
+class FavoriteRunner < ActiveRecord::Base
+  include FavoritesRunnerHelper
 
   def start
     15.times do
@@ -8,12 +8,12 @@ class LeastRecentFavoriteRunner < ActiveRecord::Base
       update_trackers( favorites )
       return if self.complete?
     end
-    user.most_recent_favorite_runner.update( since_id: Favorite.first.twitter_id )
   end
 
   def update_trackers favorites
-    user.most_recent_favorite_runner.update( since_id: Favorite.first.twitter_id ) if favorites.empty?
     self.update( complete: true ) if favorites.empty?
+    self.update( max_id: nil) if favorites.empty?
     self.update( max_id: favorites.last.id ) unless favorites.empty?
+    self.update( complete: false ) unless favorites.empty?
   end
 end
