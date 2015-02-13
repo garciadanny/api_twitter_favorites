@@ -16,36 +16,44 @@ ActiveRecord::Schema.define(version: 20150123170554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "favorite_runners", force: :cascade do |t|
+    t.integer  "max_id",     limit: 8
+    t.boolean  "complete",             default: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "favorite_runners", ["user_id"], name: "index_favorite_runners_on_user_id", using: :btree
+
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "twitter_id", limit: 8
-    t.text    "text"
+    t.integer  "user_id"
+    t.integer  "twitter_id", limit: 8
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
-  create_table "least_recent_favorite_runners", force: :cascade do |t|
-    t.integer "max_id",   limit: 8
-    t.boolean "complete",           default: false
-    t.integer "user_id"
-  end
-
-  add_index "least_recent_favorite_runners", ["user_id"], name: "index_least_recent_favorite_runners_on_user_id", using: :btree
-
   create_table "most_recent_favorite_runners", force: :cascade do |t|
-    t.integer "since_id", limit: 8
-    t.integer "max_id",   limit: 8
-    t.integer "user_id"
+    t.integer  "since_id",   limit: 8
+    t.integer  "max_id",     limit: 8
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "most_recent_favorite_runners", ["user_id"], name: "index_most_recent_favorite_runners_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.integer "twitter_id",              limit: 8
-    t.string  "twitter_handle"
-    t.string  "access_token"
-    t.string  "access_token_secret"
-    t.integer "initial_favorites_count"
+    t.integer  "twitter_id",              limit: 8
+    t.string   "twitter_handle"
+    t.string   "access_token"
+    t.string   "access_token_secret"
+    t.integer  "initial_favorites_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["twitter_id"], name: "index_users_on_twitter_id", using: :btree

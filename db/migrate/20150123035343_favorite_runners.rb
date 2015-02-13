@@ -1,9 +1,11 @@
-class LeastRecentFavoriteRunners < ActiveRecord::Migration
+class FavoriteRunners < ActiveRecord::Migration
   def change
-    create_table :least_recent_favorite_runners do |t|
+    create_table :favorite_runners do |t|
       t.integer :max_id, limit: 8
       t.boolean :complete, default: false
       t.belongs_to :user, index: true
+
+      t.timestamps
     end
   end
 end

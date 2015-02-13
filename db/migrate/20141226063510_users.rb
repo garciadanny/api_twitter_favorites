@@ -6,6 +6,8 @@ class Users < ActiveRecord::Migration
       t.string :access_token
       t.string :access_token_secret
       t.integer :initial_favorites_count
+
+      t.timestamps
     end
 
     add_index :users, :twitter_id
