@@ -11,13 +11,8 @@ describe FavoriteRunner do
 
       let(:favorites) { [ OpenStruct.new(id: 7) ] }
 
-      it 'does not update #complete' do
-        expect(runner).not_to receive(:update).with( complete: true )
-        runner.update_trackers favorites
-      end
-
-      it 'updates #max_id with last tweet in the response' do
-        expect(runner).to receive(:update).with( max_id: 7 )
+      it 'updates #complete to false and sets the #max_id' do
+        expect(runner).to receive(:update).twice
         runner.update_trackers favorites
       end
     end
