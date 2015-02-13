@@ -38,7 +38,7 @@ describe Favorite do
 
     before { Favorite.create user_id: 1, twitter_id: 5 }
 
-    it 'returns favorites in descending order by #twitter_id' do
+    it 'returns favorites from newest to oldest' do
       expect(Favorite.first.twitter_id).to eq 5
       expect(Favorite.last.twitter_id).to eq 1
     end
