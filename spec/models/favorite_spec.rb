@@ -43,4 +43,13 @@ describe Favorite do
       expect(Favorite.last.twitter_id).to eq 1
     end
   end
+
+  describe '#unfavorite' do
+    it 'removes a tweet as favorited' do
+      user = User.create
+      favorite = user.favorites.create( twitter_id: 1 )
+      allow_any_instance_of(Twitter::REST::Client).to receive(:unfavorite).with(favorite.twitter_id).and_return true
+      expect{ favorite.unfavorite }.to change{ Favorite.count }.by(-1)
+    end
+  end
 end
