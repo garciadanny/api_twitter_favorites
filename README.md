@@ -13,10 +13,8 @@ This can be useful when favoriting things you want to go back and look at later,
 
 2) rescue from rate limit errors and queue a job that'll start in 15 min.
 
-3) if a user deletes a favorite, also delete it on twitter
+3) `SessionsController` Will need to Redirect user to Ember app, and tell Ember if it's a new user.
 
-4) `SessionsController` Will need to Redirect user to Ember app, and tell Ember if it's a new user.
+4) Create API endpoint to read a user's favorites
 
-5) Create API endpoint to read a user's favorites
-
-6) Update README
+5) Update README
