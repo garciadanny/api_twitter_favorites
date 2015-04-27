@@ -13,7 +13,7 @@ describe FavoriteRunner do
 
       it 'updates #complete to false and sets the #max_id' do
         expect(runner).to receive(:update).twice
-        runner.update_trackers favorites
+        runner.send :update_trackers, favorites
       end
     end
 
@@ -23,7 +23,7 @@ describe FavoriteRunner do
 
       it 'updates #complete to true and unsets #max_id' do
         expect(runner).to receive(:update).twice
-        runner.update_trackers favorites
+        runner.send :update_trackers, favorites
       end
     end
   end
