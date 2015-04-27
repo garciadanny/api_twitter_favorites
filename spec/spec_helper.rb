@@ -36,6 +36,10 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+
+    mocks.when_declaring_verifying_double do |reference|
+      reference.target.define_attribute_methods
+    end
   end
 
 # The settings below are suggested to provide a good initial experience
@@ -83,3 +87,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+
