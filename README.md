@@ -9,12 +9,12 @@ This can be useful when favoriting things you want to go back and look at later,
 
 ## Todo
 
-1) `FavoriteRunner`: after the 15 requests, record the date/time so that future requests will have to wait until at least 15 mins have passed since this time.
+* rescue from rate limit errors when hitting /applicaiton/rate_limit_status endpoint
+ and queue a job that'll start in 15 min.
 
-2) rescue from rate limit errors and queue a job that'll start in 15 min.
+* `SessionsController` Will need to Redirect user to Ember app, and tell Ember if it's a new user.
 
-3) `SessionsController` Will need to Redirect user to Ember app, and tell Ember if it's a new user.
+* Create API endpoint to read a user's favorites
 
-4) Create API endpoint to read a user's favorites
-
-5) Update README
+* Don't make unnecessary calls to the db in FavoriteRunner#reset_trackers
+and FavoriteRunner#set_trackers
