@@ -10,9 +10,9 @@ class Favorite < ActiveRecord::Base
   end
 
   def unfavorite
-    rest_client = RestClient.new(:twitter, user)
-    rest_client.unfavorite( self.twitter_id )
-    self.destroy
+    client = TwitterClient.new(user)
+    client.unfavorite( twitter_id )
+    destroy
   end
 
   def user
