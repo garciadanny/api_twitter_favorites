@@ -24,6 +24,6 @@ module FavoritesRunnerHelper
   end
 
   def client
-    @client ||= RestClient.new(:twitter, user)
+    @client ||= TwitterClient.new(user)
   end
 end
